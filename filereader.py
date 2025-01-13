@@ -1,5 +1,22 @@
 '''
-    Read a file line by line
+    Context Manager: "with"
+        To avoid memory/resource leakage for:
+            1. File operation
+            2. Database connections
+        This can be avoided by using the 'with' keywork which
+        automatically setup and teardown resources 
+
+        Other languages when working with files try-except-finally is used 
+        to ensure that the file resource is closed 
+
+        Python provides an easy way to manage resources. The with keyword is used
+
+        File descriptor: 
+
+        Descriptor Leakage:
+
+    Open file and return a corresponding file object witb open()
+    The open() function is one of the built in functions of the python interpretor
 '''
 
 import os

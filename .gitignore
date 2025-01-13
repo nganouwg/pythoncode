@@ -1,1 +1,9 @@
 .env
+
+# Byte-compiled / optimized / DLL files
+/utils/__pycache__
+*.py[cod]
+
+#Data files
+/data
+
