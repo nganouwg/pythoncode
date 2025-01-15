@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import time
 
 def fetch_latest_10k(cik):
     """
@@ -51,19 +52,15 @@ def fetch_latest_10k(cik):
             # Construct the URL to download the filing
             download_url = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession_number}/{document_url}"
             print(f"Downloading 10-K for CIK {cik}, Filing Date: {filing_date}")
+            print(f"with URL: {download_url}")
             
             # Save the file locally
+            
             filename = f"data/10-K_{cik}_{filing_date}.html"
 
-            doc_response = requests.get(download_url, headers=headers)
+            download_latest_10k(headers, download_url, filename)
 
-            if doc_response.status_code == 200:
-                print("Request succeeded!")
-                with open(filename, "wb") as file:
-                    file.write(doc_response.content)
-                print("10-K downloaded successfully.")
-            else:
-                print(f"Failed with status code: {doc_response.status_code}")
+            time.sleep(5)  #wait for X seconds
 
             '''
             with requests.get(download_url, headers=headers, stream=True) as r:
@@ -75,8 +72,21 @@ def fetch_latest_10k(cik):
                     print(f"Failed to download the 10-K. HTTP Status: {r.status_code}")
             return
             '''
+        
+        #print(f"No 10-K found for CIK {cik}.")
 
-    print(f"No 10-K found for CIK {cik}.")
+
+def download_latest_10k(headers, url, filename):
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        print("Request succeeded!")
+        with open(filename, "wb") as file:
+            file.write(response.content)
+        print("10-K downloaded successfully.")
+    else:
+        print(f"Failed with status code: {response.status_code}")
 
 # Example: Fetch latest 10-K for a given CIK
 cik_number = "0000320193"  # Example CIK for Apple Inc.
